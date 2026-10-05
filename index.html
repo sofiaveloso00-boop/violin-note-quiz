@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Violin Notes + Fingers — 4 Note Drill</title>
+<title>Notas e Dedos no Violino — Treino de 4 Notas</title>
 <style>
 :root{--bg:#090909;--panel:#171717;--panel2:#222;--text:#f5f5f5;--muted:#b8b8b8;--line:#efefef;--border:#333;--accent:#3578d4;--good:#63d17c;--bad:#ff7a7a}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -20,9 +20,9 @@ input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:10
 </head>
 <body>
 <main>
-<h1>Violin Notes + Fingers — 4 Note Drill</h1>
-<p class="sub">Natural notes only, first position, from open Sol (G3) through Sol5. Type the solfège name and finger number; no string input.</p>
-<div class="stats"><span id="score">0 correct · 0 attempts</span><span id="streak">Streak: 0</span></div>
+<h1>Notas e Dedos no Violino — Treino de 4 Notas</h1>
+<p class="sub">Somente notas naturais, primeira posição, do Sol3 aberto até Sol5. Digite o nome da nota e o número do dedo; não precisa indicar a corda.</p>
+<div class="stats"><span id="score">0 corretas · 0 tentativas</span><span id="streak">Sequência: 0</span></div>
 <section class="card">
 <div class="staffwrap">
 <svg id="staff" viewBox="0 0 860 350" class="staff" role="img" aria-label="Treble clef staff with four notes">
@@ -40,13 +40,13 @@ input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:10
 </div>
 <div class="answers" id="answers"></div>
 <div class="actions">
-  <button id="check" class="primary" type="button">Check</button>
-  <button id="next" type="button">Next 4</button>
-  <button id="reveal" type="button">Reveal</button>
-  <button id="reset" type="button">Reset score</button>
+  <button id="check" class="primary" type="button">Verificar</g/button>
+  <button id="next" type="button">Próximas 4</g/button>
+  <button id="reveal" type="button">Revelar</g/button>
+  <button id="reset" type="button">Zerar placar</g/button>
 </div>
-<div id="feedback" class="feedback">For each note, enter its name and finger number.</div>
-<div class="small">Keyboard: press <span class="kbd">Enter</span> to move to the next box; on the last finger box, Enter checks the round.</div>
+<div id="feedback" class="feedback">Para cada nota, digite o nome e o número do dedo.</div>
+<div class="small">Teclado: pressione <span class="kbd">Enter</span> to move to the next box; on the last dedo box, Enter checks the round.</div>
 </section>
 </main>
 <script>
@@ -76,12 +76,12 @@ input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:10
   const feedback=document.getElementById('feedback');
   const scoreEl=document.getElementById('score');
   const streakEl=document.getElementById('streak');
-  let round=[], correctRounds=0, attempts=0, streak=0, graded=false;
+  let round=[], correctRounds=0, tentativas=0, streak=0, graded=false;
 
   function normalize(v){return String(v||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
   function addLedger(x,y){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',x-28);l.setAttribute('x2',x+28);l.setAttribute('y1',y);l.setAttribute('y2',y);ledgersG.appendChild(l)}
   function drawLedgers(n,x){if(n.y>=230)addLedger(x,230);if(n.y>=260)addLedger(x,260)}
-  function updateStats(){scoreEl.textContent=`${correctRounds} correct · ${attempts} attempts`;streakEl.textContent=`Streak: ${streak}`}
+  function updateStats(){scoreEl.textContent=`${correctRounds} corretas · ${tentativas} tentativas`;streakEl.textContent=`Sequência: ${streak}`}
   function chooseRound(){const shuffled=[...noteData].sort(()=>Math.random()-.5);return shuffled.slice(0,4)}
 
   function drawRound(){
@@ -91,10 +91,10 @@ input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:10
       const e=document.createElementNS('http://www.w3.org/2000/svg','ellipse');
       e.setAttribute('cx',xs[i]);e.setAttribute('cy',n.y);e.setAttribute('rx','15');e.setAttribute('ry','11');e.setAttribute('transform',`rotate(-15 ${xs[i]} ${n.y})`);notesG.appendChild(e);
       const col=document.createElement('div');col.className='note-col';
-      col.innerHTML=`<div class="lab">NOTE ${i+1}</div><input id="name-${i}" type="text" placeholder="Note" aria-label="Note ${i+1} name"><input id="finger-${i}" type="number" min="0" max="4" placeholder="Finger" aria-label="Note ${i+1} finger">`;
+      col.innerHTML=`<div class="lab">NOTA ${i+1}</div><input id="name-${i}" type="text" placeholder="Nota" aria-label="Nota ${i+1} name"><input id="finger-${i}" type="number" min="0" max="4" placeholder="Dedo" aria-label="Nota ${i+1} dedo">`;
       answers.appendChild(col);
     });
-    bindEnter(); feedback.textContent='For each note, enter its name and finger number.';
+    bindEnter(); feedback.textContent='Para cada nota, digite o nome e o número do dedo.';
     document.getElementById('name-0').focus();
   }
 
@@ -107,19 +107,19 @@ input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:10
     if(graded)return;
     const nameInputs=[0,1,2,3].map(i=>document.getElementById(`name-${i}`));
     const fingerInputs=[0,1,2,3].map(i=>document.getElementById(`finger-${i}`));
-    if(nameInputs.some(x=>!x.value.trim())||fingerInputs.some(x=>x.value==='')){feedback.textContent='Fill in all eight boxes first.';return;}
-    attempts++;
+    if(nameInputs.some(x=>!x.value.trim())||fingerInputs.some(x=>x.value==='')){feedback.textContent='Preencha os oito campos primeiro.';return;}
+    tentativas++;
     const results=round.map((n,i)=>({nameOK:normalize(nameInputs[i].value)===normalize(n.name), fingerOK:String(fingerInputs[i].value).trim()===n.finger}));
     const all=results.every(r=>r.nameOK&&r.fingerOK);
-    if(all){correctRounds++;streak++;feedback.innerHTML='<span class="good">✓ All four correct.</span> '+round.map(n=>`${n.name} / finger ${n.finger}`).join(' · ')}
-    else{streak=0;feedback.innerHTML=round.map((n,i)=>results[i].nameOK&&results[i].fingerOK?`<span class="good">✓ ${n.name} / ${n.finger}</span>`:`<span class="bad">✗ ${n.name} / finger ${n.finger}</span>`).join(' &nbsp;&nbsp; ')}
+    if(all){correctRounds++;streak++;feedback.innerHTML='<span class="good">✓ As quatro estão corretas.</span> '+round.map(n=>`${n.name} / dedo ${n.finger}`).join(' · ')}
+    else{streak=0;feedback.innerHTML=round.map((n,i)=>results[i].nameOK&&results[i].fingerOK?`<span class="good">✓ ${n.name} / ${n.finger}</span>`:`<span class="bad">✗ ${n.name} / dedo ${n.finger}</span>`).join(' &nbsp;&nbsp; ')}
     graded=true;updateStats();
   }
 
   document.getElementById('check').addEventListener('click',grade);
   document.getElementById('next').addEventListener('click',drawRound);
-  document.getElementById('reveal').addEventListener('click',()=>{feedback.textContent=round.map((n,i)=>`${i+1}. ${n.name} — finger ${n.finger}`).join('     ')});
-  document.getElementById('reset').addEventListener('click',()=>{correctRounds=0;attempts=0;streak=0;updateStats();drawRound()});
+  document.getElementById('reveal').addEventListener('click',()=>{feedback.textContent=round.map((n,i)=>`${i+1}. ${n.name} — dedo ${n.finger}`).join('     ')});
+  document.getElementById('reset').addEventListener('click',()=>{correctRounds=0;tentativas=0;streak=0;updateStats();drawRound()});
   updateStats();drawRound();
 })();
 </script>
